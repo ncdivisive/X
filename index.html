@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NC Divisive | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #050816;
+      --bg-card: rgba(15, 23, 42, 0.85);
+      --accent: #00e6ff;
+      --accent-soft: #7c3aed;
+      --accent-pink: #ec4899;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --radius-lg: 20px;
+      --shadow-soft: 0 24px 80px rgba(0,0,0,0.9);
+      --blur: 18px;
+      --nav-height: 70px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top left, #1d2337 0%, #050816 40%, #020617 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Scrollbar (mobile & desktop) */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--accent), var(--accent-pink));
+      border-radius: 999px;
+    }
+
+    /* Layout helpers */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Glass card */
+    .glass {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(var(--blur));
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    /* Animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    }
+    .fade-up.delay-1 { animation-delay: 0.2s; }
+    .fade-up.delay-2 { animation-delay: 0.4s; }
+    .fade-up.delay-3 { animation-delay: 0.6s; }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .float-soft {
+      animation: floatSoft 6s ease-in-out infinite;
+    }
+    @keyframes floatSoft {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-8px) translateX(4px); }
+    }
+
+    .gradient-ring {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 999px;
+      background: conic-gradient(from 160deg, #6366f1, #22d3ee, #a855f7, #ec4899, #6366f1);
+      filter: blur(40px);
+      opacity: 0.4;
+      z-index: -1;
+    }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(3,7,18,0.9), rgba(3,7,18,0.5), transparent);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .nav {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #22d3ee, #4f46e5, #020617);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.7);
+    }
+
+    .logo-text-main {
+      font-weight: 600;
+      font-size: 17px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .logo-text-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 13px;
+    }
+
+    nav li a {
+      position: relative;
+      padding-bottom: 4px;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+
+    nav li a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-pink));
+      transition: width 0.25s ease;
+    }
+
+    nav li a:hover {
+      color: var(--text-main);
+    }
+
+    nav li a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22d3ee, #6366f1);
+      border: none;
+      color: #020617;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.7);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 35px rgba(94, 234, 212, 0.6);
+    }
+
+    /* Hero */
+    main {
+      padding-top: calc(var(--nav-height) + 26px);
+    }
+
+    #hero {
+      padding: 32px 0 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero .container {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .hero-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .hero-copy {
+      flex: 1;
+      max-width: 640px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px 4px 4px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .eyebrow-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: conic-gradient(from 220deg, #22c55e, #22d3ee, #a855f7, #22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(45, 212, 191, 0.7);
+    }
+
+    .eyebrow-dot-inner {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #020617;
+    }
+
+    .hero-title {
+      font-size: 32px;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .hero-title span.highlight {
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #e879f9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 460px;
+      margin-bottom: 18px;
+    }
+
+    .hero-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .skill-pill {
+      font-size: 11px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.24), rgba(15,23,42,0.9));
+    }
+
+    .moto-box {
+      font-size: 12px;
+      color: var(--text-main);
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(56, 189, 248, 0.6);
+      background: radial-gradient(circle at 0 0, rgba(56,189,248,0.2), rgba(15,23,42,0.96));
+      box-shadow: 0 0 28px rgba(56, 189, 248, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .moto-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(148, 163, 184, 0.9);
+      margin-bottom: 3px;
+    }
+
+    .moto-highlight {
+      color: #a5b4fc;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .btn-primary {
+      padding: 11px 18px;
+      border-radius: 999px;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(120deg, #22c55e, #22d3ee, #6366f1);
+      color: #020617;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.8);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 0 40px rgba(45, 212, 191, 0.9);
+    }
+
+    .btn-ghost {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15,23,42,0.6);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(96, 165, 250, 0.9);
+      color: var(--text-main);
+      background: rgba(15,23,42,0.9);
+    }
+
+    /* Hero right side */
+    .hero-right {
+      position: relative;
+      flex: 1;
+      min-height: 260px;
+    }
+
+    .hero-profile {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .profile-frame {
+      position: relative;
+      border-radius: 26px;
+      padding: 10px;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.3), rgba(15,23,42,0.95));
+      box-shadow: 0 30px 80px rgba(15,23,42,0.9);
+    }
+
+    .profile-inner {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(148,163,184,0.4);
+      position: relative;
+      background: #020617;
+    }
+
+    .profile-inner img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      height: 260px;
+    }
+
+    .status-pill {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      font-size: 10px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.92);
+      border: 1px solid rgba(52,211,153,0.8);
+      color: #6ee7b7;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,0.9);
+    }
+
+    .badge {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      font-size: 10px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.92);
+      border: 1px solid rgba(94,234,212,0.8);
+      color: #e5e7eb;
+    }
+
+    .floating-card {
+      position: absolute;
+      top: 55%;
+      left: 0;
+      transform: translate(-28%, -50%);
+      width: 160px;
+      padding: 10px;
+      border-radius: 16px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(129,140,248,0.9);
+      box-shadow: 0 18px 55px rgba(15,23,42,0.95);
+      font-size: 11px;
+    }
+
+    .floating-card-title {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .floating-card-value {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .floating-card-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .floating-chip {
+      font-size: 9px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      color: var(--text-muted);
+    }
+
+    .floating-secondary {
+      position: absolute;
+      top: 18%;
+      right: -10%;
+      width: 150px;
+      padding: 9px;
+      border-radius: 14px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(56,189,248,0.7);
+      font-size: 10px;
+      box-shadow: 0 16px 55px rgba(15,23,42,1);
+    }
+
+    .floating-secondary-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .floating-secondary-value {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Sections */
+    section {
+      padding: 26px 0 40px;
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      max-width: 320px;
+    }
+
+    .section-tagline {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(148,163,184,0.9);
+    }
+
+    /* About */
+    #about .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .about-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .about-highlight {
+      color: #e5e7eb;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .tag-card {
+      padding: 9px 10px;
+      border-radius: 14px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.5);
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .tag-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(148,163,184,0.9);
+    }
+
+    .tag-main {
+      font-size: 12px;
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+
+    .about-stats {
+      padding: 12px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top left, rgba(139,92,246,0.2), rgba(15,23,42,0.98));
+      border: 1px solid rgba(129,140,248,0.7);
+      font-size: 11px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .stat-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* Services / Roles */
+    #roles .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .role-card {
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: radial-gradient(circle at top, rgba(56,189,248,0.12), rgba(15,23,42,0.96));
+      font-size: 11px;
+    }
+
+    .role-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(148,163,184,0.9);
+      margin-bottom: 4px;
+    }
+
+    .role-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .role-body {
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .role-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: rgba(148,163,184,0.9);
+    }
+
+    /* Contact / Team */
+    #contact .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+      gap: 16px;
+    }
+
+    .contact-card {
+      padding: 14px;
+      border-radius: 18px;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.98));
+      border: 1px solid rgba(56,189,248,0.7);
+      font-size: 12px;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .contact-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 9px;
+      border-radius: 12px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(148,163,184,0.4);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .contact-item span.label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(148,163,184,0.9);
+    }
+
+    .contact-link {
+      font-size: 11px;
+      color: #e5e7eb;
+      white-space: nowrap;
+    }
+
+    .pill-small {
+      padding: 4px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(74,222,128,0.7);
+      font-size: 9px;
+      color: #bbf7d0;
+    }
+
+    .admin-card {
+      padding: 12px;
+      border-radius: 18px;
+      background: radial-gradient(circle at top, rgba(129,140,248,0.28), rgba(15,23,42,0.98));
+      border: 1px solid rgba(129,140,248,0.7);
+      font-size: 11px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr);
+      gap: 10px;
+    }
+
+    .admin-heading {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(191,219,254,0.95);
+    }
+
+    .admin-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    .admin-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .admin-note {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      padding: 16px 0 20px;
+      border-top: 1px solid rgba(30,64,175,0.7);
+      background: radial-gradient(circle at top, rgba(37,99,235,0.25), rgba(3,7,18,0.98));
+      font-size: 10px;
+      color: rgba(156,163,175,0.9);
+    }
+
+    .footer-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.9);
+      font-size: 10px;
+    }
+
+    /* Responsive */
+    @media (min-width: 720px) {
+      #hero .container {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .hero-grid {
+        flex-direction: row;
+      }
+
+      .hero-copy {
+        padding-right: 20px;
+      }
+
+      .hero-title {
+        font-size: 40px;
+      }
+
+      .hero-right {
+        min-height: 320px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      header {
+        background: radial-gradient(circle at top left, rgba(15,23,42,0.96), rgba(3,7,18,0.96));
+      }
+      nav ul {
+        display: none;
+      }
+      .nav-cta {
+        padding-inline: 10px;
+        font-size: 12px;
+      }
+      #about .content,
+      #contact .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      #roles .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero-title {
+        font-size: 28px;
+      }
+      #roles .cards {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <div class="logo-mark">N</div>
+        <div>
+          <div class="logo-text-main">NC DIVISIVE</div>
+          <div class="logo-text-sub">Creator • Model • Brand Face</div>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#hero">Overview</a></li>
+          <li><a href="#about">Profile</a></li>
+          <li><a href="#roles">Collabs</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="#contact" class="nav-cta">
+        Request booking
+        <span>↗</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero">
+      <div class="gradient-ring" style="top:-80px; right:-60px;"></div>
+      <div class="gradient-ring" style="bottom:-140px; left:-90px; opacity:0.28;"></div>
+
+      <div class="container hero-grid">
+        <div class="hero-copy fade-up">
+          <div class="eyebrow">
+            <div class="eyebrow-dot"><div class="eyebrow-dot-inner"></div></div>
+            <span>Private bookings • Long‑term brand partnerships</span>
+          </div>
+
+          <h1 class="hero-title">
+            High‑impact creator & face for brands
+            <span class="highlight">built for mobile‑first campaigns.</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            NC Divisive is a content‑driven personality focused on building a tight, reliable community where brands and people grow together.
+          </p>
+
+          <div class="hero-pill-row">
+            <div class="skill-pill">Short‑form content • Instagram‑native</div>
+            <div class="skill-pill">Brand‑safe personality</div>
+            <div class="skill-pill">Community‑focused collaborations</div>
+          </div>
+
+          <div class="moto-box">
+            <div class="moto-tag">Moto</div>
+            <div>
+              I want to build a <span class="moto-highlight">strong, small community</span> where everyone can work together, help each other, and create a powerful micro‑society.
+            </div>
+          </div>
+
+          <div class="hero-ctas">
+            <a href="#contact" class="btn-primary">
+              DM manager to book
+              <span>●</span>
+            </a>
+            <a href="https://www.instagram.com/ncdivisive" target="_blank" class="btn-ghost">
+              Instagram @ncdivisive
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-right fade-up delay-2">
+          <div class="hero-profile float-soft">
+            <div class="profile-frame">
+              <div class="profile-inner">
+                <!-- Replace with your own classy professional portrait -->
+                <img src="your-photo.jpg" alt="NC Divisive portrait" />
+                <div class="status-pill">
+                  <span class="status-dot"></span>
+                  <span>Open for 2025 campaigns</span>
+                </div>
+                <div class="badge">Mobile‑first · High‑tech look</div>
+              </div>
+            </div>
+
+            <div class="floating-card">
+              <div class="floating-card-title">Current focus</div>
+              <div class="floating-card-value">Content, community & clean brand fits</div>
+              <div class="floating-card-chip-row">
+                <span class="floating-chip">Instagram Reels</span>
+                <span class="floating-chip">Story series</span>
+                <span class="floating-chip">UGC collabs</span>
+              </div>
+            </div>
+
+            <div class="floating-secondary">
+              <div class="floating-secondary-label">Platforms</div>
+              <div class="floating-secondary-value">@ncdivisive · Android‑native</div>
+              <div style="margin-top:6px; font-size:10px; color:var(--text-muted);">
+                Designed and optimised to look premium on Android, tablet, and desktop.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container glass fade-up">
+        <div class="section-header">
+          <div>
+            <div class="section-tagline">Profile</div>
+            <h2 class="section-title">Who is NC Divisive</h2>
+          </div>
+          <p class="section-subtitle">
+            A creator and model focused on sharp visuals, clear communication, and small but powerful communities that brands can trust.
+          </p>
+        </div>
+
+        <div class="content">
+          <div>
+            <p class="about-text">
+              <span class="about-highlight">NC Divisive</span> is a creator with a high‑tech, premium aesthetic built for Android‑first audiences and modern brands. 
+              Collaborations are treated like long‑term partnerships, not one‑off posts, so every project feels intentional and on‑brand.
+            </p>
+            <p class="about-text" style="margin-top:10px;">
+              The goal is to stay <span class="about-highlight">small, sharp, and effective</span>: a tight community that actually cares, 
+              real conversations in DMs, and content that fits both street‑level culture and polished brand guidelines.
+            </p>
+
+            <div class="about-grid">
+              <div class="tag-card">
+                <span class="tag-label">Platforms</span>
+                <span class="tag-main">Instagram‑first · Android audience</span>
+                <span>Optimised experience for mobile users and fast viewing.</span>
+              </div>
+              <div class="tag-card">
+                <span class="tag-label">Vibe</span>
+                <span class="tag-main">High‑tech • Clean • Confident</span>
+                <span>Dark gradients, neon accents, and premium visuals.</span>
+              </div>
+              <div class="tag-card">
+                <span class="tag-label">Community</span>
+                <span class="tag-main">Small & strong circle</span>
+                <span>Focused on mutual support and real engagement.</span>
+              </div>
+              <div class="tag-card">
+                <span class="tag-label">Fit for brands</span>
+                <span class="tag-main">Reliable & brand‑safe</span>
+                <span>Clear communication through manager & admin.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-stats">
+            <div class="stat">
+              <span class="stat-value">Android</span>
+              <span class="stat-label">Primary device focus</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">Web</span>
+              <span class="stat-label">Desktop & Windows ready</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">Community</span>
+              <span class="stat-label">Strong & small by design</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">2025+</span>
+              <span class="stat-label">Available for campaigns</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROLES / SERVICES -->
+    <section id="roles">
+      <div class="container glass fade-up">
+        <div class="section-header">
+          <div>
+            <div class="section-tagline">Collaboration modes</div>
+            <h2 class="section-title">How we can work</h2>
+          </div>
+          <p class="section-subtitle">
+            Flexible collaboration options that keep things simple for brands – from quick launches to deep, long‑term partnerships.
+          </p>
+        </div>
+
+        <div class="cards">
+          <div class="role-card">
+            <div class="role-label">01 • Brand campaigns</div>
+            <div class="role-title">Face of your campaign</div>
+            <p class="role-body">
+              High‑tech, dark‑aesthetic visuals for launches, drops, and promos designed to look premium on Android screens.
+            </p>
+            <div class="role-meta">
+              <span>Stories · Reels · Posts</span>
+              <span>Packages via manager</span>
+            </div>
+          </div>
+
+          <div class="role-card">
+            <div class="role-label">02 • Community collabs</div>
+            <div class="role-title">Small & strong society</div>
+            <p class="role-body">
+              Projects that speak to tight communities, loyalty, and long‑term trust instead of quick one‑time reach.
+            </p>
+            <div class="role-meta">
+              <span>Series • Seasons</span>
+              <span>Deeper integration</span>
+            </div>
+          </div>
+
+          <div class="role-card">
+            <div class="role-label">03 • UGC & content</div>
+            <div class="role-title">Custom content for brands</div>
+            <p class="role-body">
+              Clean, brand‑safe UGC and short‑form content libraries that your team can reuse across platforms.
+            </p>
+            <div class="role-meta">
+              <span>Licensing options</span>
+              <span>DM manager</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / TEAM -->
+    <section id="contact">
+      <div class="container fade-up">
+        <div class="section-header">
+          <div>
+            <div class="section-tagline">Bookings & contact</div>
+            <h2 class="section-title">Talk to the team</h2>
+          </div>
+          <p class="section-subtitle">
+            All collaborations are handled through management and administration to keep communication clear, fast, and professional.
+          </p>
+        </div>
+
+        <div class="grid">
+          <div class="contact-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+              <div>
+                <div style="font-size:13px; font-weight:600; color:#e5e7eb;">Primary contact – Manager</div>
+                <div style="font-size:11px; color:var(--text-muted);">
+                  For collaborations, campaigns, and business – please DM the manager directly.
+                </div>
+              </div>
+              <div class="pill-small">Fast response</div>
+            </div>
+
+            <div class="contact-row">
+              <div class="contact-item">
+                <div>
+                  <span class="label">Instagram</span><br />
+                  <a href="https://www.instagram.com/lauren.lyyyy" target="_blank" class="contact-link">@lauren.lyyyy</a>
+                </div>
+                <span>Manager</span>
+              </div>
+
+              <div class="contact-item">
+                <div>
+                  <span class="label">Creator handle</span><br />
+                  <a href="https://www.instagram.com/ncdivisive" target="_blank" class="contact-link">@ncdivisive</a>
+                </div>
+                <span>For viewing content</span>
+              </div>
+
+              <div class="contact-item">
+                <div>
+                  <span class="label">Direct contact</span><br />
+                  <span class="contact-link">DM manager for all deals</span>
+                </div>
+                <span>Required</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <div>
+              <div class="admin-heading">Administration</div>
+              <div class="admin-name">Deity_Terror</div>
+              <div class="admin-role">Operations & admin support</div>
+            </div>
+            <div class="admin-note">
+              Admin makes sure timelines, deliverables, and approvals stay clean. 
+              For backend coordination and follow‑ups, the admin works together with the manager.
+            </div>
+            <div class="contact-item" style="margin-top:4px;">
+              <div>
+                <span class="label">Admin Instagram</span><br />
+                <a href="https://www.instagram.com/deity_terror" target="_blank" class="contact-link">@deity_terror</a>
+              </div>
+              <span>Admin</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div>© <span id="year"></span> NC Divisive. All rights reserved.</div>
+      <div class="footer-meta">
+        <div class="footer-pill">Android‑first • Windows ready</div>
+        <div class="footer-pill">Dark gradient • High‑tech aesthetic</div>
+        <div class="footer-pill">Community‑driven collaborations</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal animation on scroll
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
